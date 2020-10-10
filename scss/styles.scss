@@ -576,6 +576,66 @@ fieldset{
     padding: 50px 100px;
 }
 
+/*BOTON GO UP*/
+.go-top-container{
+    position: fixed;
+    bottom: 4rem;
+    right: 4rem;
+    width: 6.6 vrem;
+    height: 6.6 vrem;
+    z-index: -1;
+    .go-top-button{
+        width: 0rem;
+        height: 0rem;
+        background: var(--gold1);
+        border-radius: 50%;
+        cursor: pointer;
+        transition: .2s;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+    }
+}
+
+i{
+    position: absolute;
+    font-size: 1.7rem;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    color: black;
+    transition: .2s;
+}
+.show .go-top-button{
+    animation: popup .3s ease-in-out;
+    width: 3.5rem;
+    height: 3.5rem;
+    z-index: 11;
+}
+.show{
+    z-index: 12;
+}
+.show i{
+    transform: translate(-50%, -50%) scale(1);
+}
+
+@keyframes popup{
+    0%{
+        width: 0rem;
+        height: 0rem;
+    }
+    50%{
+        width: 6rem;
+        height: 6rem;
+    }
+    100%{
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+}
+
+
 /*MEDIA QUERYS*/
 
 @media (min-width: 701px) and (max-width: 900px) {

@@ -4,14 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyecto final JAVASCRIPT</title>
-    <!-- Estilos CSS -->
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/helper-classes.css">
+    <title>OASIS FAN'S PAGE</title>
     <!-- Box icons -->
     <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
@@ -27,7 +26,7 @@
                     <a href="#" class="link">Home</a>
                     <a href="discografia.html" class="link">Discografía</a>
                     <a href="blog.html" class="link">Blog</a>
-                    <a href="tienda.html" class="link link--active" >Tienda</a>
+                    <a href="tienda.html" class="link link--active">Tienda</a>
                 </div>
             </div>
         </nav>
@@ -54,7 +53,7 @@
 
             <p class="copy__section copy__section--modifier">Somos un grupo de fans apasionados por Oasis.
                 Buscamos una persona que sepa inglés avanzado
-                y se comprometa con los plazos de entrega. <br>Esa persona sos vos? 
+                y se comprometa con los plazos de entrega. <br>Esa persona sos vos?
             </p>
 
 
@@ -85,7 +84,7 @@
             <fieldset>
                 <form action="#" method="GET" id="formulario-staff">
                     <h4 class="copy__section copy__section--modifier">¡Sumate ahora!</h4>
-                    <input class="newsletter__input"  id="scriptBox" type="text" name="titulo"placeholder="Escriba aqui" onkeypress="capturarEnter(event);" >
+                    <input class="newsletter__input" id="scriptBox" type="text" name="titulo" placeholder="Ingrese email" onkeypress="capturarEnter(event)">
                     <button class="boton cta" type="submit">Enviar</button>
                 </form>
                 <ul class="list__staff" id="staff-contenedor">
@@ -97,12 +96,18 @@
 
         </section>
     </main>
-
+    <!-- Boton de ir arriba -->
+    <div class="go-top-container">
+        <div class="go-top-button">
+            <i class="fas fa-chevron-up"></i>
+        </div>
+    </div>
+    <!-- FOOTER -->
     <footer class="footer">
         <p>Johanna Palo Bael &copy;</p>
     </footer>
     <!-- SCRIPTS -->
-    <script src="scripts.js"></script>
+    <script src="js/scripts_index.js"></script>
     <!-- JQUERY -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 </body>
