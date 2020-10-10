@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/helper-classes.css">
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
+    <title>Futura tienda</title>
+</head>
+
+<body>
+    <header class="hero">
+        <nav class="nav__hero">
+            <div class="container nav__container">
+                <div class="logo">
+
+                    <h2 class="logo__name">oasis</h2>
+                </div>
+                <div class="links">
+                    <a href="index.html" class="link">Home</a>
+                    <a href="discografia.html" class="link">Discografía</a>
+                    <a href="blog.html" class="link">Blog</a>
+                    <a href="#" class="link">Tienda</a>
+                    <a href="#" class="link link--active">Contacto</a>
+                </div>
+            </div>
+        </nav>
+
+        <section class="services">
+            <div class="container">
+                <div class="container">
+                    <div class="row">
+                        <!-- Elementos generados a partir del JSON -->
+                        <main id="items" class="col-sm-8 row"></main>
+                        <!-- Carrito -->
+                        <aside class="col-sm-4">
+                            <h2>Carrito</h2>
+                            <!-- Elementos del carrito -->
+                            <ul id="carrito" class="list-group"></ul>
+                            <hr>
+                            <!-- Precio total -->
+                            <p class="text-right">Total: <span id="total"></span>&euro;</p>
+                            <button id="boton-vaciar" class="btn btn-danger">Vaciar</button>
+                        </aside>
+                    </div>
+                </div>
+                <footer class="footer">
+                    <div class="contact">
+                        <div class="item__contact">
+                            <i class='bx bx-copyright contact__icon'></i>
+                            <h3 class="contact__title">Johanna Palo</h3>
+                        </div>
+                        <div class="item__contact">
+                            <i class='bx bx-mail-send contact__icon'></i>
+                            <h3 class="contact__title">oasis_fanpage@johannapalo.com</h3>
+                        </div>
+                        <div class="item__contact">
+                            <i class='bx bxs-edit-location contact__icon'></i>
+                            <h3 class="contact__title">Paseos de la reforma</h3>
+                        </div>
+                        <div class="item__contact item__contact--gold">
+                            <i class='bx bxs-chat contact__icon contact__icon--modifier'></i>
+                            <h3 class="contact__title">Contactanos ahora</h3>
+                        </div>
+                    </div>
+                </footer>
+                <!-- Scripts propios -->
+
+                <script>
+                    function getCardHtml(product) {
+                        return `
+                <div class="col-sm-4">
+                    <div class="card">
+                        <a href="#" class="imageProduct"><img src="${product.thumbnail}" width="100%"></a>
+                        <div class="card-body">
+                            <p class="card-text">${product.title}</p>
+                            <p class="card-text">${product.price}</p>
+                        </div>
+                    </div>
+                </div>
+                `;
+                    }
+
+                    function renderProducts(products) {
+                        products.forEach(product => {
+                            $('#productsContainer').append(getCardHtml(product));
+                        });
+                    }
+
+
+                    $(document).ready(() => {
+                        $("form[name='searchForm']").validate({
+                            rules: {
+                                search: {
+                                    required: true,
+                                    minlength: 3
+                                }
+                            },
+                            messages: {
+                                search: {
+                                    required: 'El campo de búsqueda es obligatorio',
+                                    minlength: 'Debe tener al menos 3 carácteres'
+                                }
+                            },
+                            submitHandler: function (event) {
+                                const keySearch = event.elements.search.value;
+                                const mlSearch = `ajax_practica.json`;
+                                console.log(mlSearch);
+                                $.ajax({
+                                    method: "GET",
+                                    url: mlSearch
+                                }).done((data) => {
+                                    console.log(data);
+                                    // renderProducts(data.results);
+                                }).fail((error) => {
+                                    console.log(error);
+                                })
+                            }
+                        })
+                    });
+
+                    // Variables
+                    let baseDeDatos = [{
+                            id: 1,
+                            nombre: 'Patata',
+                            precio: 1,
+                            imagen: 'dona.jpg'
+                        },
+                        {
+                            id: 2,
+                            nombre: 'Cebolla',
+                            precio: 1.2,
+                            imagen: 'dona.jpg'
+                        },
+                        {
+                            id: 3,
+                            nombre: 'Calabacin',
+                            precio: 2.1,
+                            imagen: 'dona.jpg'
+                        },
+                        {
+                            id: 4,
+                            nombre: 'Fresas',
+                            precio: 0.6,
+                            imagen: 'dona.jpg'
+                        }
+
+                    ]
+                    let $items = document.querySelector('#items');
+                    let carrito = [];
+                    let total = 0;
+                    let $carrito = document.querySelector('#carrito');
+                    let $total = document.querySelector('#total');
+                    let $botonVaciar = document.querySelector('#boton-vaciar');
+
+                    // Funciones
+                    function renderItems() {
+                        for (let info of baseDeDatos) {
+                            // Estructura
+                            let miNodo = document.createElement('div');
+                            miNodo.classList.add('card', 'col-sm-4');
+                            // Body
+                            let miNodoCardBody = document.createElement('div');
+                            miNodoCardBody.classList.add('card-body');
+                            // Titulo
+                            let miNodoTitle = document.createElement('h5');
+                            miNodoTitle.classList.add('card-title');
+                            miNodoTitle.textContent = info['nombre'];
+                            // Imagen
+                            let miNodoImagen = document.createElement('img');
+                            miNodoImagen.classList.add('img-fluid');
+                            miNodoImagen.setAttribute('src', info['imagen']);
+                            // Precio
+                            let miNodoPrecio = document.createElement('p');
+                            miNodoPrecio.classList.add('card-text');
+                            miNodoPrecio.textContent = info['precio'] + '€';
+                            // Boton 
+                            let miNodoBoton = document.createElement('button');
+                            miNodoBoton.classList.add('btn', 'btn-primary');
+                            miNodoBoton.textContent = '+';
+                            miNodoBoton.setAttribute('marcador', info['id']);
+                            miNodoBoton.addEventListener('click', anyadirCarrito);
+                            // Insertamos
+                            miNodoCardBody.appendChild(miNodoImagen);
+                            miNodoCardBody.appendChild(miNodoTitle);
+                            miNodoCardBody.appendChild(miNodoPrecio);
+                            miNodoCardBody.appendChild(miNodoBoton);
+                            miNodo.appendChild(miNodoCardBody);
+                            $items.appendChild(miNodo);
+                        }
+                    }
+
+                    function anyadirCarrito() {
+                        // Anyadimos el Nodo a nuestro carrito
+                        carrito.push(this.getAttribute('marcador'))
+                        // Calculo el total
+                        calcularTotal();
+                        // Renderizamos el carrito 
+                        renderizarCarrito();
+
+                    }
+
+                    function renderizarCarrito() {
+                        // Vaciamos todo el html
+                        $carrito.textContent = '';
+                        // Quitamos los duplicados
+                        let carritoSinDuplicados = [...new Set(carrito)];
+                        // Generamos los Nodos a partir de carrito
+                        carritoSinDuplicados.forEach(function (item, indice) {
+                            // Obtenemos el item que necesitamos de la variable base de datos
+                            let miItem = baseDeDatos.filter(function (itemBaseDatos) {
+                                return itemBaseDatos['id'] == item;
+                            });
+                            // Cuenta el número de veces que se repite el producto
+                            let numeroUnidadesItem = carrito.reduce(function (total, itemId) {
+                                return itemId === item ? total += 1 : total;
+                            }, 0);
+                            // Creamos el nodo del item del carrito
+                            let miNodo = document.createElement('li');
+                            miNodo.classList.add('list-group-item', 'text-right', 'mx-2');
+                            miNodo.textContent =
+                                `${numeroUnidadesItem} x ${miItem[0]['nombre']} - ${miItem[0]['precio']}€`;
+                            // Boton de borrar
+                            let miBoton = document.createElement('button');
+                            miBoton.classList.add('btn', 'btn-danger', 'mx-5');
+                            miBoton.textContent = 'X';
+                            miBoton.style.marginLeft = '1rem';
+                            miBoton.setAttribute('item', item);
+                            miBoton.addEventListener('click', borrarItemCarrito);
+                            // Mezclamos nodos
+                            miNodo.appendChild(miBoton);
+                            $carrito.appendChild(miNodo);
+                        })
+                    }
+
+                    function borrarItemCarrito() {
+                        // Obtenemos el producto ID que hay en el boton pulsado
+                        let id = this.getAttribute('item');
+                        // Borramos todos los productos
+                        carrito = carrito.filter(function (carritoId) {
+                            return carritoId !== id;
+                        });
+                        // volvemos a renderizar
+                        renderizarCarrito();
+                        // Calculamos de nuevo el precio
+                        calcularTotal();
+                    }
+
+                    function calcularTotal() {
+                        // Limpiamos precio anterior
+                        total = 0;
+                        // Recorremos el array del carrito
+                        for (let item of carrito) {
+                            // De cada elemento obtenemos su precio
+                            let miItem = baseDeDatos.filter(function (itemBaseDatos) {
+                                return itemBaseDatos['id'] == item;
+                            });
+                            total = total + miItem[0]['precio'];
+                        }
+                        // Renderizamos el precio en el HTML
+                        $total.textContent = total.toFixed(2);
+                    }
+
+                    function vaciarCarrito() {
+                        // Limpiamos los productos guardados
+                        carrito = [];
+                        // Renderizamos los cambios
+                        renderizarCarrito();
+                        calcularTotal();
+                    }
+
+                    // Eventos
+                    $botonVaciar.addEventListener('click', vaciarCarrito);
+
+                    // Inicio
+                    renderItems();
+                </script>
+                <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+                <script src="scripts-menu_redes_sociales.js"></script>
+</body>
+
+</html>
