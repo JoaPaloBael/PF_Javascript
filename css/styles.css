@@ -557,16 +557,16 @@ i {
   color: black;
   transition: .2s; }
 
-.show .go-top-button {
+.showed .go-top-button {
   animation: popup .3s ease-in-out;
   width: 3.5rem;
   height: 3.5rem;
   z-index: 11; }
 
-.show {
+.showed {
   z-index: 12; }
 
-.show i {
+.showed i {
   transform: translate(-50%, -50%) scale(1); }
 
 @keyframes popup {
@@ -626,11 +626,7 @@ i {
 
 /* ? SHOPPING CART */
 .shopping-cart-items {
-  padding: 20px 0px;
-  display: flex;
-  width: 150px; }
-  .shopping-cart-items div {
-    margin: 20px; }
+  padding: 20px 0px; }
 
 .shopping-cart-header {
   border-bottom: 1px solid #ccc; }
